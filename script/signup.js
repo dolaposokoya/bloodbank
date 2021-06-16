@@ -113,8 +113,7 @@ async function registerUser(event) {
         xhr.setRequestHeader('headers', `${headers}`);
         xhr.send(body)
         xhr.onload = function () {
-            const users1 = JSON.stringify(this.responseText)
-            // console.log('users', this.responseText, 'users1', users1)
+            console.log('users', this.responseText)
         }
 
     }
@@ -123,6 +122,4 @@ async function registerUser(event) {
     // const email = $("#email").val();
     // const password = $("#password").val();
     // const gender = $("#gender").val();
-
-    console.log('formData', isValid)
 }

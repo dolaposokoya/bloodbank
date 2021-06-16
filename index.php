@@ -1,7 +1,7 @@
 <?php include('header.php') ?>
 <link rel="stylesheet" href="./styles/index.css">
 <div class="conatiner-fluid">
-    <form class="row" method="post">
+    <form class="row" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="first_name" placeholder="First Name">
             <label for="first_name" class="form-label">First Name</label>
