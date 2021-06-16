@@ -1,0 +1,31 @@
+.conatiner-fluid {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 60%;
+    padding: 30px;
+    /* height: 60%; */
+    background-color: rgb(192, 201, 201);
+}
+
+.form-label {
+    padding-left: 200px;
+}
+
+input {
+    padding-left: 100px
+}
+
+.btn-outline-primary {
+    color: black;
+    border-color: black;
+    align-self: center;
+}
+
+.error p {
+    color: red;
+    font-size: 12px;
+    padding: 3;
+    margin: 0;
+}
