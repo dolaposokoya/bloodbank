@@ -115,6 +115,41 @@ async function registerUser(event) {
         xhr.onload = function () {
             console.log('users', this.responseText)
         }
+        // $.ajax({
+        //     method: "post",
+        //     url: apiURl,
+        //     dataType: 'json',
+        //     data: {
+        //         first_name: first_name,
+        //         last_name: last_name,
+        //         email: email,
+        //         password: password,
+        //         gender: gender,
+        //     },
+        //     beforeSend: function (data) {
+        //         $("#submit").html("Sending...");
+        //     },
+        //     success: function (data) {
+        // if (data.status === "error") {
+        // console.log('Data', data);
+        //     window.location.reload();
+        // } else if (data.status === "invalid") {
+        //     console.log(data.msg);
+        //     $(".form_err").removeClass("text-success").addClass("text-danger");
+        //     $(".form_err").html(data.msg).show();
+        // } else if (data.status === "success") {
+        //     $(".form_err").removeClass("text-danger").addClass("text-success");
+        //     $(".form_err").html("Thanks for your Enquiry!!").show();
+
+        //     $(".fname").val("");
+        //     $(".mobile").val("");
+        //     $(".email").val("");
+        //     $(".msg").val("");
+
+        //     $("#submit").html("Send");
+        // }
+        //     }
+        // });
 
     }
     // const first_name = $("#first_name").val();
