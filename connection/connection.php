@@ -2,20 +2,15 @@
 $dbServer = "localhost";
 $dbUserName = 'root';
 $dbPassword = "";
+$databaseName = "bloodbank";
 
 
-$conn = mysqli_connect($dbServer, $dbUserName, $dbPassword);
+$conn = mysqli_connect($dbServer, $dbUserName, $dbPassword, $databaseName);
 
 if (!$conn) {
-    die('Connection failed' . mysqli_connect_error($conn));
+    echo "No connection " . mysqli_connect_error($conn);
+    // die('Connection failed' . mysqli_connect_error($conn));
 }
 
-$sql = "Create Database bloodbank";
 
-if (mysqli_query($conn, $sql)) {
-    return true;
-} else {
-    return false;
-}
-
-mysqli_close($conn);
+// mysqli_close($conn);

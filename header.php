@@ -1,4 +1,3 @@
-<?php include('./connection/connection.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,6 +34,5 @@ body {
     <!-- <div class="spinnerdiv">
         <div class="spinner-border" style="color:cornflowerblue"></div>
     </div> -->
-    <script src="./script/loader.js"></script>
 
 </html>

@@ -74,7 +74,6 @@ async function registerUser(event) {
 
     const { isValid, first_nameError, last_nameError, emailError, passwordError, genderError } = await validateInput();
     if (isValid === false) {
-        // return false
         Object.keys(first_nameError).map(item => {
             Errorfirst_name.innerHTML = first_nameError[item]
         })
@@ -95,66 +94,45 @@ async function registerUser(event) {
         })
     }
     else {
-        const xhr = new XMLHttpRequest();
+        const fname_v = $("#first_name").val();
+        const lname_v = $("#last_name").val();
+        const email_v = $("#email").val();
+        const pwd_v = $("#password").val();
+        const gender_v = $("#gender").val();
         const apiURl = `controller/signup.controller.php`
-        const headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        }
-        const body = {
-            first_name: first_name,
-            last_name: last_name,
-            email: email,
-            password: password,
-            gender: gender,
+        const data = {
+            fname_v: fname_v,
+            lname_v: lname_v,
+            email_v: email_v,
+            pwd_v: pwd_v,
+            gender_v: gender_v,
         };
-        xhr.open('POST', `${apiURl}`, true)
-        xhr.setRequestHeader("content-type", "application/x-www-form-encoded")
-        xhr.setRequestHeader('headers', `${headers}`);
-        xhr.send(body)
-        xhr.onload = function () {
-            console.log('users', this.responseText)
-        }
-        // $.ajax({
-        //     method: "post",
-        //     url: apiURl,
-        //     dataType: 'json',
-        //     data: {
-        //         first_name: first_name,
-        //         last_name: last_name,
-        //         email: email,
-        //         password: password,
-        //         gender: gender,
-        //     },
-        //     beforeSend: function (data) {
-        //         $("#submit").html("Sending...");
-        //     },
-        //     success: function (data) {
-        // if (data.status === "error") {
-        // console.log('Data', data);
-        //     window.location.reload();
-        // } else if (data.status === "invalid") {
-        //     console.log(data.msg);
-        //     $(".form_err").removeClass("text-success").addClass("text-danger");
-        //     $(".form_err").html(data.msg).show();
-        // } else if (data.status === "success") {
-        //     $(".form_err").removeClass("text-danger").addClass("text-success");
-        //     $(".form_err").html("Thanks for your Enquiry!!").show();
 
-        //     $(".fname").val("");
-        //     $(".mobile").val("");
-        //     $(".email").val("");
-        //     $(".msg").val("");
-
-        //     $("#submit").html("Send");
-        // }
-        //     }
-        // });
+        $.ajax({
+            method: "post",
+            url: apiURl,
+            dataType: 'json',
+            data: data,
+            beforeSend: function (data) {
+                $(".btn-outline-primary").html("Sending...");
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.success === true) {
+                    console.log(data.message);
+                    $("#first_name").val("");
+                    $("#last_name").val("");
+                    $("#email").val("");
+                    $("#password").val("");
+                    $("#gender").val("");
+                    $(".btn-outline-primary").html("Send");
+                } else {
+                    console.log(data.message);
+                    $(".btn-outline-primary").html("Send");
+                }
+            }
+        });
 
     }
-    // const first_name = $("#first_name").val();
-    // const last_name = $("#last_name").val();
-    // const email = $("#email").val();
-    // const password = $("#password").val();
-    // const gender = $("#gender").val();
+
 }
