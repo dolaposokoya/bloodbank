@@ -51,12 +51,12 @@ async function registerUser(event) {
     }
     else {
         ;
-        const email_v = $("#email").val();
-        const pwd_v = $("#password").val();
-        const apiURl = `controller/signup.controller.php`
+        const email = $("#email").val();
+        const password = $("#password").val();
+        const apiURl = `controller/login.controller.php`
         const data = {
-            email_v: email_v,
-            pwd_v: pwd_v,
+            email: email,
+            password: password,
         };
 
         $.ajax({
@@ -69,6 +69,7 @@ async function registerUser(event) {
             },
             success: function (data) {
                 if (data.success === true) {
+                    console.log(data.message);
                     $("#email").val("");
                     $("#password").val("");;
                     $(".btn-outline-primary").html("Login");
