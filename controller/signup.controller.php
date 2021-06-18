@@ -1,11 +1,9 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") { //validate request method because its ajax
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     include('../connection/connection.php');
 
-    //dont check for table exist, it will confuse and slow ure code..just create table manually and run insertuser function
-    //error will come when u try to insert data inside the table
     $response = createUserTableIfNotExist($conn);
     if ($response == 1) {
         $userExist = checkIfUserExist($conn);
