@@ -1,5 +1,12 @@
 <?php include_once('../header.php') ?>
 <link rel="stylesheet" href="../styles/index.css">
+
+
+<div id="alert_box">
+    <p class="alert alert-warning" id="warning_alert" role="alert">
+        Error
+    </p>
+</div>
 <div class="conatiner-fluid">
     <form class="row" method="post">
         <div class="form-floating mb-3">
@@ -45,7 +52,10 @@
             <p id="genderError"></p>
         </div>
         <div class="form-floating mb-3">
-            <button type="button" class="btn btn-outline-primary" id="submit">SUBMIT</button>
+            <button type="button" class="btn btn-outline-primary" id="register">Register</button>
+        </div>
+        <div class="form-floating mb-3">
+            <p>Already a member click <a href="../index.php"> here</a></p>
         </div>
     </form>
 </div>

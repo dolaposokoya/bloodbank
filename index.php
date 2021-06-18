@@ -1,5 +1,10 @@
 <?php include('header.php') ?>
 <link rel="stylesheet" href="./styles/index.css">
+<div id="alert_box">
+    <p class="alert alert-warning" id="alert_warning" role="alert">
+        Error
+    </p>
+</div>
 <div class="conatiner-fluid">
     <form class="row" method="post">
         <div class="form-floating mb-3">
@@ -25,7 +30,7 @@
             <button type="button" class="btn btn-outline-primary" id="submit">LOGIN</button>
         </div>
         <div class="form-floating mb-3">
-            <a href="./views/register.php">New here click here</a>
+            <p>New here? click <a href="./views/register.php"> here</a> to register</p>
         </div>
     </form>
 </div>

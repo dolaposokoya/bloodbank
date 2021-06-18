@@ -1,42 +1,20 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    include('../connection/connection.php');
+try {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        include('../connection/connection.php');
 
-    // loginUser($conn);
-    $email = test_data($_POST['email']);
-    $password = test_data($_POST['password']);
-
-    if (!empty($email) && !empty($password)) {
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $data['success'] = false;
-            $data['status'] = "invalid";
-            $data['message'] = "Invalid Email";
-        } else {
-            $query =  "SELECT * from `user` WHERE `email` = '" . mysqli_real_escape_string($conn, $email) . "'";
-            $result = mysqli_query($conn, $query);
-            // $row = mysqli_fetch_assoc($result);
-            // printf("%s (%s)\n", $row["first_name"], $row["last_name"]);
-            /* fetch associative array */
-            while ($row = mysqli_fetch_assoc($result)) {
-                printf("%s (%s)\n", $row["first_name"], $row["last_name"]);
-            }
-            $data['success'] = true;
-            $data['status'] = "success";
-            $data['message'] = "['first_name']";
-            // $data['message'] = $row['first_name'];
-        }
+        loginUser($conn);
     } else {
         $data['success'] = false;
-        $data['status'] = "invalid";
-        $data['message'] = "Error Occured";
+        $data['status'] = 'error';
+        $data['message'] = 'not safe';
     }
-} else {
+} catch (Exception $e) {
     $data['success'] = false;
-    $data['status'] = 'error';
-    $data['message'] = 'not safe';
+    $data['status'] = 401;
+    $data['message'] = $e->getMessage();
 }
-
 function test_data($data)
 {
     $data = trim($data);
@@ -50,46 +28,50 @@ function test_data($data)
 
 function loginUser($conn)
 {
-    $email = test_data($_POST['email']);
-    $password = test_data($_POST['password']);
+    try {
+        $email = test_data($_POST['email']);
+        $password = test_data($_POST['password']);
 
-
-    if (!empty($email) && !empty($password)) {
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!empty($email) && !empty($password)) {
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                $data['success'] = false;
+                $data['status'] = "invalid";
+                $data['message'] = "Invalid Email";
+            } else {
+                $email = strtolower($email);
+                $query =  "SELECT * from users WHERE email = '" . mysqli_real_escape_string($conn, $email) . "'";
+                $result = mysqli_query($conn, $query);
+                if (mysqli_num_rows($result) == 0) {
+                    $data['success'] = false;
+                    $data['status'] = 201;
+                    $data['message'] = "No such user";
+                } else {
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        if ($row['email'] === $email) {
+                            $hash = $row['password'];
+                            $match =  password_verify($password,  $hash);
+                            if ($match === true) {
+                                $data['success'] = true;
+                                $data['status'] = 200;
+                                $data['message'] = 'Login Successful';
+                            } else {
+                                $data['success'] = false;
+                                $data['status'] = 200;
+                                $data['message'] = 'Email or password do not match';
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
             $data['success'] = false;
             $data['status'] = "invalid";
-            $data['message'] = "Invalid Email";
-        } else {
-            $query =  "Select * from users where email = '" . $email . "";
-            $result = mysqli_query($conn, $query);
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            printf("%s (%s)\n", $row["first_name"], $row["last_name"]);
-            $data['success'] = true;
-            $data['status'] = "success";
-            $data['message'] = $row['first_name'];
-            // while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            // $data['first_name'] = $row['first_name'];
-            // $data['success'] = true;
-            // $data['status'] = "success";
-            // $data['message'] = $row['first_name'];
-            // }
-            // $hash = password_hash($password, PASSWORD_DEFAULT);
-            // if ($hash === 0) {
-            //     $data['success'] = false;
-            //     $data['status'] = "invalid";
-            //     $data['message'] = "Error while creating user";
-            // } else {
-            //     $data['success'] = true;
-            //     $data['status'] = "success";
-            //     $data['message'] = "User login successfully";
-            //     header("Location: index.php");
-            // }
+            $data['message'] = "Error Occured";
         }
-    } else {
+    } catch (Exception $e) {
         $data['success'] = false;
-        $data['status'] = "invalid";
-        $data['message'] = "Error Occured";
+        $data['status'] = 401;
+        $data['message'] = $e->getMessage();
     }
-
     echo json_encode($data);
 }

@@ -1,3 +1,10 @@
+#alert_box {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    display: block;
+}
+
 .conatiner-fluid {
     display: flex;
     justify-content: space-evenly;

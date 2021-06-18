@@ -7,28 +7,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") { //validate request method because it
     //dont check for table exist, it will confuse and slow ure code..just create table manually and run insertuser function
     //error will come when u try to insert data inside the table
     $response = createUserTableIfNotExist($conn);
-    if ($response === true) {
-        // checkIfUserExist($conn);
-        // $userExist = checkIfUserExist($conn);
-        // if ($userExist === true) {
-        //     $data['success'] = $userExist;
-        //     $data['status'] = 200;
-        //     $data['message'] = "User with that email already exist";
-        // } else {
-        insertUser($conn);
-        //     $data['success'] = $userExist;
-        //     $data['status'] = 200;
-        //     $data['message'] = "User with that email not exist";
-        // }
+    if ($response == 1) {
+        $userExist = checkIfUserExist($conn);
+        if ($userExist == 1) {
+            $data['success'] = false;
+            $data['status'] = 200;
+            $data['message'] = "User with that email already exist";
+            echo json_encode($data);
+        } else {
+            insertUser($conn);
+        }
     } else {
         $data['success'] = $response;
         $data['status'] = 200;
         $data['message'] = "Error Occured";
+        echo json_encode($data);
     }
 } else {
     $data['success'] = false;
     $data['status'] = 'error';
     $data['message'] = 'not safe';
+    echo json_encode($data);
 }
 
 function test_data($data)
@@ -41,23 +40,18 @@ function test_data($data)
 
 function checkIfUserExist($conn)
 {
-    // sql to create table
     $email = test_data($_POST['email_v']);
-    $sql = "SELECT first_name,email FROM users";
-    $result = mysqli_query($conn, $sql);
-    $db_first_name = array();
-    // $sql = "SELECT enail FROM users WHERE email='$email'";
+    $email = strtolower($email);
+    $query =  "SELECT * from users WHERE email = '" . mysqli_real_escape_string($conn, $email) . "'";
+    $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) == 0) {
-        $data['success'] = true;
-        $data['status'] = 200;
-        $data['message'] = 'No user found';
-    } else {
-        while ($row = $result->fetch_assoc()) {
-            array_push($db_first_name, $row["first_name"]);
+        return false;
+    } elseif ($row = mysqli_fetch_assoc($result)) {
+        if ($row['email'] === $email) {
+            return true;
+        } else {
+            return false;
         }
-        $data['success'] = true;
-        $data['status'] = 200;
-        $data['message'] = $db_first_name['first_name'];
     }
 }
 
@@ -74,8 +68,7 @@ function createUserTableIfNotExist($conn)
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
-
-    if (mysqli_query($conn, $sql) === TRUE) {
+    if (mysqli_query($conn, $sql) == 1) {
         return true;
     } else {
         return false;
@@ -91,7 +84,7 @@ function insertUser($conn)
     $password = test_data($_POST['pwd_v']);
     $gender = test_data($_POST['gender_v']);
 
-    if (!empty($first_name) && !empty($last_name)) { //check if all the required values are not empty
+    if (!empty($first_name) && !empty($last_name)) {
         if (!filter_var($_POST['email_v'], FILTER_VALIDATE_EMAIL)) {
             $data['success'] = false;
             $data['status'] = "invalid";
@@ -99,9 +92,10 @@ function insertUser($conn)
         } else {
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
+            $email = strtolower($email);
             $query = "INSERT INTO users (first_name, last_name, email, password ,gender) VALUES ('" . mysqli_real_escape_string($conn, $first_name) . "','" . mysqli_real_escape_string($conn, $last_name) . "','" . mysqli_real_escape_string($conn, $email) . "','" . mysqli_real_escape_string($conn, $hash) . "','" . mysqli_real_escape_string($conn, $gender) . "');";
             $result = mysqli_query($conn, $query);
-            if ($result === 0) {
+            if ($result == 0) {
                 $data['success'] = false;
                 $data['status'] = "invalid";
                 $data['message'] = "Error while creating user";
@@ -109,7 +103,6 @@ function insertUser($conn)
                 $data['success'] = true;
                 $data['status'] = "success";
                 $data['message'] = "User created successfully";
-                header("Location: index.php");
             }
         }
     } else {

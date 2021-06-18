@@ -1,4 +1,4 @@
-const signUpBtn = document.getElementById('submit');
+const signUpBtn = document.getElementById('register');
 const first_name = document.getElementById('first_name');
 const last_name = document.getElementById('last_name');
 const email = document.getElementById('email');
@@ -12,10 +12,10 @@ const Errorpassword = document.getElementById('passwordError');
 const invalidpassword = document.getElementById('passwordInvalidError');
 const Errorgender = document.getElementById('genderError');
 const error = document.getElementsByClassName('error');
-
+const alert_box = document.getElementById('alert_box');
 
 signUpBtn.addEventListener('click', registerUser)
-
+alert_box.style.display = 'none'
 
 const validateInput = async () => {
     let isValid = true
@@ -99,7 +99,7 @@ async function registerUser(event) {
         const email_v = $("#email").val();
         const pwd_v = $("#password").val();
         const gender_v = $("#gender").val();
-        const apiURl = `controller/signup.controller.php`
+        const apiURl = `../controller/signup.controller.php`
         const data = {
             fname_v: fname_v,
             lname_v: lname_v,
@@ -114,21 +114,27 @@ async function registerUser(event) {
             dataType: 'json',
             data: data,
             beforeSend: function (data) {
-                $(".btn-outline-primary").html("Sending...");
+                $("#register").html("Registering...");
             },
             success: function (data) {
-                console.log(data);
-                if (data.success === true) {
-                    console.log(data.message);
+                if (data.success === true && data.message === "User created successfully") {
                     $("#first_name").val("");
                     $("#last_name").val("");
                     $("#email").val("");
                     $("#password").val("");
                     $("#gender").val("");
-                    $(".btn-outline-primary").html("Send");
+                    $('#warning_alert').text(data.message)
+                    alert_box.style.display = 'block'
+                    setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
+                    $("#register").html("Register");
+                    // $('#warning_alert').text("");
+                    setTimeout(function () { window.location.assign('../index.php') }, 2000);
                 } else {
-                    console.log(data.message);
-                    $(".btn-outline-primary").html("Send");
+                    $('#warning_alert').text(data.message);
+                    alert_box.style.display = 'block'
+                    setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
+                    $("#register").html("Register");
+                    // $('#warning_alert').text("")
                 }
             }
         });

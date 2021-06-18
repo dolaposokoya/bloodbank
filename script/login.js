@@ -6,9 +6,11 @@ const inValidemail = document.getElementById('emailInvalidError');
 const Errorpassword = document.getElementById('passwordError');
 const invalidpassword = document.getElementById('passwordInvalidError');
 const error = document.getElementsByClassName('error');
+const alert_box = document.getElementById('alert_box');
 
+alert_box.style.display = 'none'
 
-signUpBtn.addEventListener('click', registerUser)
+signUpBtn.addEventListener('click', loginUser)
 
 
 const validateInput = async () => {
@@ -38,7 +40,7 @@ const validateInput = async () => {
     }
 }
 
-async function registerUser(event) {
+async function loginUser(event) {
     event.preventDefault();
 
     const { isValid, emailError, passwordError } = await validateInput();
@@ -68,14 +70,21 @@ async function registerUser(event) {
                 $(".btn-outline-primary").html("Sending...");
             },
             success: function (data) {
-                if (data.success === true) {
-                    console.log(data.message);
+                if (data.success === true && data.message === 'Login Successful') {
                     $("#email").val("");
-                    $("#password").val("");;
+                    $("#password").val("");
+                    $('#alert_warning').text(data.message)
+                    alert_box.style.display = 'block'
+                    setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
+                    $("#register").html("Register");
                     $(".btn-outline-primary").html("Login");
+                    // $('#alert_warning').text("")
                 } else {
-                    console.log(data.message);
+                    $('#alert_warning').text(data.message)
+                    alert_box.style.display = 'block'
+                    setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
                     $(".btn-outline-primary").html("Login");
+                    // $('#alert_warning').text("")
                 }
             }
         });
