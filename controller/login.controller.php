@@ -1,5 +1,5 @@
 <?php
-
+// session_start();
 try {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         include('../connection/connection.php');
@@ -29,6 +29,7 @@ function test_data($data)
 function loginUser($conn)
 {
     try {
+
         $email = test_data($_POST['email']);
         $password = test_data($_POST['password']);
 
@@ -48,12 +49,17 @@ function loginUser($conn)
                 } else {
                     if ($row = mysqli_fetch_assoc($result)) {
                         if ($row['email'] === $email) {
+                            session_start();
                             $hash = $row['password'];
                             $match =  password_verify($password,  $hash);
                             if ($match === true) {
+                                $_SESSION["first_name"] = $row['first_name'];
+                                $_SESSION["last_name"] = $row['last_name'];
+                                $_SESSION["email"] = $row['email'];
                                 $data['success'] = true;
                                 $data['status'] = 200;
                                 $data['message'] = 'Login Successful';
+                                $data['data'] = $row;
                             } else {
                                 $data['success'] = false;
                                 $data['status'] = 200;

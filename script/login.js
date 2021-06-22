@@ -25,13 +25,15 @@ const validateInput = async () => {
         emailError.empty = 'Email is empty';
         isValid = false
     }
-    if (!formData.email.includes('@')) {
-        emailError.valid = 'Email is invalid';
-        isValid = false
+    else if (formData.email !== '') {
+        emailError.empty = '';
     }
     if (formData.password === '') {
         passwordError.empty = 'Password is empty';
         isValid = false
+    }
+    else if (formData.password !== '') {
+        passwordError.empty = '';
     }
     return {
         isValid: isValid,
@@ -46,10 +48,7 @@ async function loginUser(event) {
     const { isValid, emailError, passwordError } = await validateInput();
     if (isValid === false) {
         Erroremail.innerHTML = emailError.empty
-        inValidemail.innerHTML = emailError.valid
-
         Errorpassword.innerHTML = passwordError.empty
-        invalidpassword.innerHTML = passwordError.valid
     }
     else {
         ;
@@ -71,20 +70,20 @@ async function loginUser(event) {
             },
             success: function (data) {
                 if (data.success === true && data.message === 'Login Successful') {
+                    const { first_name, last_name } = data.data
                     $("#email").val("");
                     $("#password").val("");
                     $('#alert_warning').text(data.message)
                     alert_box.style.display = 'block'
                     setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
-                    $("#register").html("Register");
                     $(".btn-outline-primary").html("Login");
-                    // $('#alert_warning').text("")
+                    window.location.assign('../bloodbank/views/user.php')
+                    // setTimeout(function () { window.location.assign('../views/user.php') }, 2000);
                 } else {
                     $('#alert_warning').text(data.message)
                     alert_box.style.display = 'block'
                     setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
                     $(".btn-outline-primary").html("Login");
-                    // $('#alert_warning').text("")
                 }
             }
         });

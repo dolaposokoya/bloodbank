@@ -1,6 +1,13 @@
-<?php include('header.php') ?>
 <link rel="stylesheet" href="./styles/index.css">
-<div id="alert_box">
+<?php
+include('header.php');
+session_start();
+
+// Removing session data
+if (isset($_SESSION["first_name"]) && isset($_SESSION["last_name"])) {
+    header('Location: views/user.php');
+} else {
+    echo '<div id="alert_box">
     <p class="alert alert-warning" id="alert_warning" role="alert">
         Error
     </p>
@@ -33,5 +40,9 @@
             <p>New here? click <a href="./views/register.php"> here</a> to register</p>
         </div>
     </form>
-</div>
+</div>';
+}
+?>
+
+
 <script src="./script/login.js"></script>

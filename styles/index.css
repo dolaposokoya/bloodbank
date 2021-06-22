@@ -1,3 +1,8 @@
+:root {
+    --navyblue: #7DF9FF;
+    --white: #fff;
+}
+
 #alert_box {
     position: absolute;
     top: 30px;
@@ -24,10 +29,22 @@ input {
     padding-left: 100px
 }
 
-.btn-outline-primary {
+.btn-outline-register {
+    display: flex;
+    justify-content: center;
     color: black;
     border-color: black;
     align-self: center;
+}
+
+.btn-outline-register:hover {
+    color: var(--white);
+    border: none;
+    background: var(--navyblue);
+}
+
+.error {
+    padding-bottom: 10px;
 }
 
 .error p {

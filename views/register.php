@@ -52,7 +52,7 @@
             <p id="genderError"></p>
         </div>
         <div class="form-floating mb-3">
-            <button type="button" class="btn btn-outline-primary" id="register">Register</button>
+            <button type="button" class="btn btn-outline-register" id="register">Register</button>
         </div>
         <div class="form-floating mb-3">
             <p>Already a member click <a href="../index.php"> here</a></p>
