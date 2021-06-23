@@ -1,0 +1,38 @@
+:root {
+    --navyblue: #7DF9FF;
+    --white: #fff;
+}
+
+#alert_box {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    display: block;
+}
+
+.error {
+    padding-bottom: 10px;
+}
+
+.error p {
+    color: red;
+    font-size: 12px;
+    padding: 3;
+    margin: 0;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top: calc(100vh - 95vh);
+    width: calc(100vw - 1vw);
+    padding: 10px;
+    background: #fff;
+}
+
+.form-floating {
+    align-items: center;
+    flex-direction: row;
+}

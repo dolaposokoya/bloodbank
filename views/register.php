@@ -1,5 +1,5 @@
-<?php include_once('../header.php') ?>
 <link rel="stylesheet" href="../styles/index.css">
+<?php include_once('../header.php') ?>
 
 
 <div id="alert_box">

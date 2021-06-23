@@ -15,19 +15,41 @@
     </script>
     <title>Blood Bank</title>
 </head>
+
 <style>
 body {
     display: flex;
-    justify-content: center;
     background-color: rgb(226, 240, 240);
-    align-items: center;
     margin: auto;
     width: 100vw;
     height: 100vh;
 }
+
+.navigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
 </style>
 
+
 <body>
+    <!-- <nav class="navigation">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+    </nav> -->
     <!-- <div class="spinnerdiv">
         <div class="spinner-border" style="color:cornflowerblue"></div>
     </div> -->
