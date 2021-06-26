@@ -64,6 +64,7 @@ function createUserTableIfNotExist($conn)
     email VARCHAR(256) NOT NUll,
     password VARCHAR(256) NOT NULL,
     gender VARCHAR(50),
+    blood_type VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";

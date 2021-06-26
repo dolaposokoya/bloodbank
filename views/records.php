@@ -21,7 +21,7 @@ include('../controller/checkuser.controller.php');
 </div>
 ';
 
-    $query =  "SELECT * from users";
+    $query =  "SELECT * from records WHERE `user_id` = '" . mysqli_real_escape_string($conn, $_SESSION["user_id"]) . "'";
     $result = mysqli_query($conn, $query);
     echo "<div class='table-responsive-sm'>
     <table class='table'>

@@ -11,14 +11,15 @@ $("#logout").click(function () {
         },
         success: (data) => {
             console.log('data', data)
-            if (data.success === true && data.message === "Logout successful") {
+            if (data.success === true && data.message === "Logging Out Succesful") {
                 $('#warning_alert').text(data.message)
                 $("#alert_box").show();
                 setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
                 $("#logout").html("Log Out");
-                setTimeout(function () { window.location.assign('../index.php') }, 2000);
+                window.location.assign('../index.php');
+                // setTimeout(function () { window.location.assign('../index.php') }, 2000);
             } else {
-                $('#warning_alert').text(data.message);
+                $('#warning_alert').text('Something went wrong');
                 $("#alert_box").show();
                 setTimeout(function () { $('#alert_box').fadeOut('slow'); }, 3000);
                 $("#logout").html("Log Out");

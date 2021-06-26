@@ -56,6 +56,7 @@ function loginUser($conn)
                                 $_SESSION["first_name"] = $row['first_name'];
                                 $_SESSION["last_name"] = $row['last_name'];
                                 $_SESSION["email"] = $row['email'];
+                                $_SESSION["user_id"] = $row['user_id'];
                                 $data['success'] = true;
                                 $data['status'] = 200;
                                 $data['message'] = 'Login Successful';
